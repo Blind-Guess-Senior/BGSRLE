@@ -1,1 +1,0 @@
-python-3.9.1-embed-amd64\python.exe encode_part.py
