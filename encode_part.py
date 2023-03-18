@@ -24,9 +24,9 @@ fw = open(codepath + ".bgsrle", "wb")  # 创建加密后的文件
 获得密钥数字
 """
 print("请输入三个数字A,B,n")
-print("A ∈ (0, 8192) 默认值1024")
-print("B ∈ (0, 8192) 默认值1024")
-print("n ∈ (0, 65536) 默认值1024")
+print("A ∈ (0, 8192] 默认值1024")
+print("B ∈ (0, 8192] 默认值1024")
+print("n ∈ (0, 65536] 默认值1024")
 
 A = input("A:")
 try:
@@ -96,6 +96,7 @@ waitWrite = ""  # 将要写入文件的字节
 处理
 """
 for iii in range(n):  # 总计n次读取 + 加密
+    numList = []
     processingCode = f.read(B)
     if not processingCode:
         break
@@ -120,6 +121,7 @@ for iii in range(n):  # 总计n次读取 + 加密
                 nowDot = str(int(nowDot) ^ 1)
     numList.append(cnt)
     numList.append("STOP")
+    cnt = 0
 
     # 写入加密后的数据
     if firstCode == '1':

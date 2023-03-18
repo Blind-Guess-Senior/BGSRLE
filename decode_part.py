@@ -4,7 +4,7 @@ import struct
 print("制作者：盲猜派高层")
 print("版本：V0.1")
 print("""
-该程序对经过盲猜派RLE2.0加密后的文件进行解密，
+该程序对经过盲猜派RLE0.1加密后的文件进行解密，
 你需要告知程序密钥，
 程序不会判断文件，请确保输入程序的文件为加密所得""")
 print()
@@ -83,22 +83,22 @@ for iii in range(n):
         nowDot = 0
 
     cnt = 0
+    bitCnt = 7
+    waitWriteBitCnt = 0
+    waitWriteNum = 0
     while cnt < B:
         processingByte = f.read(1)
-        if not  processingByte:
+        if not processingByte:
             break
         processingByte = bin(processingByte[0])[2:]
         processingByte = ('0' * (8-len(processingByte))) + processingByte  # 高位补零
 
-        flag = True
         powNum = 7
         waitWriteBitCnt = 0
         for z in processingByte:
             waitWriteBitCnt += int(z) * (2 ** powNum)
             powNum -= 1
-        if processingByte == '00000000':
-            flag = False
-        while flag:
+        while True:
             if bitCnt == -1:
                 waitWriteByte = struct.pack("B", waitWriteNum)
                 fw.write(waitWriteByte)
@@ -115,7 +115,6 @@ for iii in range(n):
             waitWriteNum += (2 ** bitCnt) * nowDot
             waitWriteBitCnt -= 1
             bitCnt -= 1
-
     blockBytes = f.read(A)
     fw.write(blockBytes)
 
